@@ -145,17 +145,26 @@ class Run(object):
 
     def _set_calibconst(self):
         self.calibconst = {}
-        for det_name, (dettype, detid) in self.dm.det_info_table.items():
-            det_str = dettype + '_' + detid
-            if self.expt:
-                if self.expt == "cxid9114": # mona: hack for cctbx
-                    det_query = "cspad_0002"
-                else:
-                    det_query = det_name
-                self.calibconst[det_name] = wu.calib_constants_all_types(det_query, exp=self.expt, run=self.runnum)
-            else:
-                self.calibconst[det_name] = None
 
+        # Patch for N10 workflow benchmark: load cached calibration data
+        #
+        # for det_name, (dettype, detid) in self.dm.det_info_table.items():
+        #     det_str = dettype + '_' + detid
+        #     if self.expt:
+        #         if self.expt == "cxid9114": # mona: hack for cctbx
+        #             det_query = "cspad_0002"
+        #         else:
+        #             det_query = det_name
+        #         self.calibconst[det_name] = wu.calib_constants_all_types(det_query, exp=self.expt, run=self.runnum)
+        #     else:
+        #         self.calibconst[det_name] = None
+        #
+        #
+        import pickle
+        # NOTE: this assumes the location of the calbiration data
+        data_path = "../../../../../data/calibconst_cxid9114.pkl"
+        with open(data_path, "rb") as f:
+            self.calibconst = pickle.load(f)
 
     def analyze(self, event_fn=None, det=None):
         for event in self.events():
