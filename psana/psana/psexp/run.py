@@ -162,7 +162,8 @@ class Run(object):
         #
         import pickle
         # NOTE: this assumes the location of the calbiration data
-        data_path = "../../../../../data/calibconst_cxid9114.pkl"
+        # data_path = "../../../../../data/calibconst_cxid9114.pkl"
+        data_path = "../data/calibconst_cxid9114.pkl"
         with open(data_path, "rb") as f:
             self.calibconst = pickle.load(f)
 
