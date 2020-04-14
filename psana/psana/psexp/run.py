@@ -160,11 +160,17 @@ class Run(object):
         #         self.calibconst[det_name] = None
         #
         #
+        import os
         import pickle
-        # NOTE: this assumes the location of the calbiration data
-        # data_path = "../../../../../data/calibconst_cxid9114.pkl"
-        data_path = "../data/calibconst_cxid9114.pkl"
-        with open(data_path, "rb") as f:
+
+        # Get path to the calibartion data
+        calib_root = os.environ.get("CALIB_ROOT")
+        if calib_root == None:
+            calib_root = os.path.join("..", "data")
+        calib_path = os.path.join(calib_root, "calibconst_cxid9114.pkl")
+
+        print(f"Loading Calibration Data from: {calib_path}")
+        with open(calib_path, "rb") as f:
             self.calibconst = pickle.load(f)
 
     def analyze(self, event_fn=None, det=None):
