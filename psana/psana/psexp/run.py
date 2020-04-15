@@ -164,7 +164,7 @@ class Run(object):
         import pickle
 
         # Get path to the calibartion data
-        calib_root = os.environ.get("CALIB_ROOT")
+        calib_root = os.environ.get("PSANA2_CALIB_ROOT")
         if calib_root == None:
             calib_root = os.path.join("..", "data")
         calib_path = os.path.join(calib_root, "calibconst_cxid9114.pkl")
